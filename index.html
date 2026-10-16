@@ -2,44 +2,491 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RXG Rigs</title>
-  <style>
-    body {
-      margin: 0;
-      background: #100e19;
-      color: white;
-      font-family: Tahoma, Arial, sans-serif;
-      text-align: center;
-      padding: 70px 20px;
-    }
-    h1 {
-      font-size: 48px;
-      color: #65ff9a;
-      text-shadow: 0 0 20px #65ff9a55;
-    }
-    span { color: #a855f7; }
-    p { color: #c5bfd4; line-height: 2; }
-    a {
-      display: inline-block;
-      padding: 12px 22px;
-      border-radius: 10px;
-      background: #65ff9a;
-      color: #100e19;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101018">
+<meta name="description" content="RXG Rigs؛ کتابخانه ریگ‌های ماینکرافت برای Blender و انیمیشن‌سازی.">
+<title>RXG Rigs | Minecraft Rig Studio</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg:#0b0b12;
+  --panel:#13131e;
+  --panel2:#191927;
+  --green:#b5ff4d;
+  --purple:#a855f7;
+  --text:#f5f5fa;
+  --muted:#a1a1b5;
+  --border:#29293b;
+}
+* {box-sizing:border-box}
+html {scroll-behavior:smooth}
+body {
+  margin:0;
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(ellipse at 90% 0%,#31134b55,transparent 35%),
+    radial-gradient(ellipse at 0% 35%,#28451b30,transparent 30%),
+    var(--bg);
+}
+a {color:inherit;text-decoration:none}
+button,input,select,textarea {font:inherit}
+button {cursor:pointer}
+.container {width:min(1160px,92%);margin:auto}
+header {
+  position:sticky;top:0;z-index:20;
+  background:#0b0b12eF;
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.nav {
+  min-height:76px;display:flex;align-items:center;
+  justify-content:space-between;gap:20px;
+}
+.logo {font-size:24px;font-weight:900;direction:ltr;white-space:nowrap}
+.logo span {color:var(--green)}
+.logo b {color:var(--purple)}
+nav {display:flex;gap:25px;color:#c4c4d3;font-size:14px}
+nav a:hover {color:var(--green)}
+.pill {
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 17px;border-radius:12px;font-weight:800;
+  border:1px solid #b5ff4d55;background:#b5ff4d12;color:var(--green);
+}
+.hero {padding:78px 0 52px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.tag {color:var(--green);font-size:13px;font-weight:800;letter-spacing:1px}
+h1 {font-size:clamp(36px,5.6vw,67px);line-height:1.35;margin:16px 0}
+h1 span {color:var(--green);text-shadow:0 0 32px #b5ff4d28}
+.gradient-text {background:linear-gradient(90deg,var(--green),#d6a2ff);color:transparent;background-clip:text}
+.hero p {color:var(--muted);line-height:2.1;max-width:600px}
+.actions {display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn {
+  border:0;border-radius:12px;padding:13px 20px;
+  font-weight:800;display:inline-flex;justify-content:center;align-items:center;gap:8px;
+}
+.primary {background:var(--green);color:#11150b}
+.secondary {background:var(--panel2);color:white;border:1px solid var(--border)}
+.primary:hover {box-shadow:0 0 28px #b5ff4d35;transform:translateY(-1px)}
+.secondary:hover {border-color:var(--purple)}
+.hero-art {
+  min-height:300px;border:1px solid #a855f750;border-radius:28px;
+  background:linear-gradient(145deg,#251238,#141a1c 65%,#111119);
+  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+}
+.orb {position:absolute;width:210px;height:210px;border-radius:50%;filter:blur(75px);background:var(--purple);opacity:.3;right:10%}
+.orb2 {position:absolute;width:160px;height:160px;border-radius:50%;filter:blur(70px);background:var(--green);opacity:.2;left:5%;bottom:0}
+.pixel {font-size:100px;position:relative;filter:drop-shadow(0 0 25px #a855f755)}
+.art-label {position:absolute;bottom:20px;left:20px;right:20px;text-align:center;color:#d7d7e8;font-size:12px;letter-spacing:2px}
+.stats {display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:5px 0 60px}
+.stat {background:#14141e;border:1px solid var(--border);border-radius:16px;padding:18px;text-align:center}
+.stat strong {display:block;font-size:25px;color:var(--green)}
+.stat span {font-size:12px;color:var(--muted)}
+section {padding:28px 0 60px}
+.section-head {display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}
+h2 {font-size:28px;margin:0 0 8px}
+.section-head p {color:var(--muted);font-size:13px;margin:0}
+.tools {display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.field {
+  background:#13131e;color:white;border:1px solid var(--border);
+  border-radius:12px;padding:12px 14px;outline:none;min-width:0;
+}
+.field:focus {border-color:var(--purple)}
+.search {flex:1;min-width:200px}
+select.field {min-width:150px}
+.cards {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card {background:var(--panel);border:1px solid var(--border);border-radius:19px;overflow:hidden;transition:.2s}
+.card:hover {transform:translateY(-4px);border-color:#a855f77a;box-shadow:0 12px 35px #0004}
+.preview {
+  height:180px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  background:radial-gradient(circle at 50% 40%,#a855f73d,transparent 50%),linear-gradient(140deg,#20202f,#111119);
+}
+.preview .emoji {font-size:72px;filter:drop-shadow(0 0 18px #a855f733)}
+.preview .category {position:absolute;top:12px;right:12px;background:#0b0b12d9;border:1px solid #ffffff20;border-radius:8px;padding:5px 9px;font-size:11px}
+.card-body {padding:17px}
+.card h3 {font-size:17px;margin:0 0 8px}
+.card p {font-size:13px;color:var(--muted);line-height:1.9;min-height:48px}
+.meta {display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.meta span {font-size:11px;color:#d0c4e5;background:#a855f715;border:1px solid #a855f72a;border-radius:7px;padding:5px 8px}
+.card-actions {display:flex;gap:9px;margin-top:14px}
+.card-actions button {flex:1;font-size:12px;padding:10px 8px}
+.empty {grid-column:1/-1;text-align:center;padding:45px;color:var(--muted);border:1px dashed var(--border);border-radius:16px}
+.submit-panel {
+  border:1px solid #a855f750;border-radius:22px;padding:30px;
+  background:linear-gradient(120deg,#251536aa,#151e17aa);
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;
+}
+.submit-panel p {color:var(--muted);line-height:2}
+.form-grid {display:grid;gap:12px}
+textarea.field {resize:vertical;min-height:100px}
+.note {font-size:12px;color:var(--muted);line-height:1.9}
+.steps {display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step {background:var(--panel);border:1px solid var(--border);padding:20px;border-radius:16px}
+.step strong {color:var(--green);font-size:22px}
+.step h3 {font-size:15px}
+.step p {font-size:12px;color:var(--muted);line-height:1.9}
+footer {border-top:1px solid var(--border);padding:28px 0;color:var(--muted);font-size:12px}
+.footer-inner {display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.modal {
+  position:fixed;inset:0;background:#000b;z-index:50;
+  display:none;align-items:center;justify-content:center;padding:18px;
+}
+.modal.open {display:flex}
+.modal-box {width:min(520px,100%);background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:24px}
+.modal-box p {color:var(--muted);line-height:2}
+.modal-head {display:flex;align-items:center;justify-content:space-between;gap:12px}
+.close {background:transparent;border:0;color:white;font-size:25px}
+.toast {position:fixed;bottom:20px;left:20px;right:20px;margin:auto;max-width:440px;background:#20202d;border:1px solid #a855f7;border-radius:12px;padding:14px 18px;z-index:70;display:none}
+.toast.show {display:block}
+@media(max-width:800px) {
+ .hero {grid-template-columns:1fr;padding-top:48px}
+ .hero-art {min-height:230px}
+ .pixel {font-size:75px}
+ .cards {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .submit-panel {grid-template-columns:1fr}
+ nav {gap:12px}
+}
+@media(max-width:540px) {
+ .nav {padding:14px 0;flex-wrap:wrap}
+ nav {order:3;width:100%;justify-content:space-between}
+ .nav .pill {font-size:12px;padding:8px 10px}
+ .cards {grid-template-columns:1fr}
+ .stats {gap:7px}
+ .stat {padding:12px 5px}
+ .stat strong {font-size:20px}
+ h2 {font-size:23px}
+ .section-head {align-items:start;flex-direction:column}
+ .steps {grid-template-columns:1fr}
+ .submit-panel {padding:20px}
+}
+</style>
 </head>
+
 <body>
-  <h1>RXG <span>RIGS</span></h1>
-  <h2>دنیای ریگ‌های ماینکرافت!</h2>
-  <p>ریگ‌های ماینکرافت برای انیمیشن و رندر را پیدا کن.</p>
-  <a href="#rigs">مشاهده ریگ‌ها</a>
-  <div id="rigs">
-    <h2>به‌زودی...</h2>
-    <p>مجموعه ریگ‌های ماینکرافت در راه است.</p>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#home">RXG <span>R</span><b>IGS</b></a>
+    <nav>
+      <a href="#home">خانه</a>
+      <a href="#library">کتابخانه</a>
+      <a href="#submit">ارسال ریگ</a>
+      <a href="#about">درباره ما</a>
+    </nav>
+    <a class="pill" href="#library">مشاهده ریگ‌ها ↙</a>
   </div>
+</header>
+
+<main>
+  <div class="container">
+    <section class="hero" id="home">
+      <div>
+        <div class="tag">✦ MINECRAFT ANIMATION COMMUNITY</div>
+        <h1>دنیای ریگ‌های<br><span>ماینکرافت</span> تو اینجاست.</h1>
+        <p>ریگ‌های ماینکرافت برای ساخت انیمیشن، رندر و پروژه‌های سه‌بعدی. ریگ موردنظرت رو پیدا کن و پروژه بعدیت رو شروع کن!</p>
+        <div class="actions">
+          <a class="btn primary" href="#library">دیدن کتابخانه ←</a>
+          <a class="btn secondary" href="#submit">معرفی ریگ خودت +</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="نمایش گرافیکی RXG Rigs">
+        <div class="orb"></div><div class="orb2"></div>
+        <div class="pixel">⬡</div>
+        <div class="art-label">CREATE · ANIMATE · RENDER</div>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stat"><strong id="rigCount">۳</strong><span>ریگ نمایشی</span></div>
+      <div class="stat"><strong>FREE</strong><span>هدف ما: دسترسی رایگان</span></div>
+      <div class="stat"><strong>3D</strong><span>ساخته‌شده برای خلاقیت</span></div>
+    </div>
+
+    <section id="library">
+      <div class="section-head">
+        <div>
+          <h2>کتابخانه <span class="gradient-text">ریگ‌ها</span></h2>
+          <p>جست‌وجو کن، دسته‌بندی رو انتخاب کن و ریگ مناسب رو پیدا کن.</p>
+        </div>
+        <span class="tag">RXG COLLECTION</span>
+      </div>
+
+      <div class="tools">
+        <input id="search" class="field search" type="search" placeholder="جست‌وجو بر اساس نام ریگ..." aria-label="جست‌وجوی ریگ">
+        <select id="filter" class="field" aria-label="فیلتر دسته‌بندی">
+          <option value="all">همه دسته‌ها</option>
+          <option value="character">کاراکتر</option>
+          <option value="weapon">سلاح</option>
+          <option value="other">سایر</option>
+        </select>
+        <select id="sort" class="field" aria-label="مرتب‌سازی">
+          <option value="default">مرتب‌سازی پیش‌فرض</option>
+          <option value="az">نام: الف تا ی</option>
+        </select>
+      </div>
+
+      <div class="cards" id="cards"></div>
+      <p class="note">توجه: موارد اولیه این صفحه صرفاً نمونه نمایشی هستند. تا زمانی که لینک فایل واقعی اضافه نشده، دکمه دانلود فعال نیست.</p>
+    </section>
+
+    <section id="submit">
+      <div class="submit-panel">
+        <div>
+          <div class="tag">JOIN THE COMMUNITY</div>
+          <h2>ریگ خودت رو معرفی کن!</h2>
+          <p>ریگی ساختی یا ریگ مفیدی پیدا کردی؟ اسم، توضیحات و لینک اشتراک فایلش رو ثبت کن تا برای اضافه‌شدن به کتابخانه بررسی بشه.</p>
+          <p class="note">این فرم در نسخه فعلی اطلاعات را به سرور ارسال نمی‌کند. برای دریافت واقعی پیشنهادها باید فرم به یک سرویس ارسال فرم یا بک‌اند متصل شود.</p>
+        </div>
+        <form class="form-grid" id="submitForm">
+          <input class="field" id="rigName" required maxlength="80" placeholder="نام ریگ">
+          <select class="field" id="rigCategory" required>
+            <option value="">انتخاب دسته‌بندی</option>
+            <option value="character">کاراکتر</option>
+            <option value="weapon">سلاح</option>
+            <option value="other">سایر</option>
+          </select>
+          <input class="field" id="rigLink" type="url" required placeholder="لینک فایل یا صفحه ریگ (https://...)">
+          <textarea class="field" id="rigDescription" maxlength="500" placeholder="توضیحات کوتاه"></textarea>
+          <button class="btn primary" type="submit">آماده‌سازی پیشنهاد</button>
+          <p class="note">با زدن دکمه، متن پیشنهاد آماده کپی می‌شود؛ ارسال خودکار انجام نمی‌شود.</p>
+        </form>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <div>
+          <h2>چطور استفاده کنی؟</h2>
+          <p>سه قدم ساده برای شروع پروژه سه‌بعدی خودت.</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><strong>01</strong><h3>ریگ مناسب رو پیدا کن</h3><p>با جست‌وجو و دسته‌بندی، مدل موردنظرت رو پیدا کن.</p></div>
+        <div class="step"><strong>02</strong><h3>جزئیات رو بررسی کن</h3><p>فرمت، سازگاری و شرایط استفاده از فایل رو بررسی کن.</p></div>
+        <div class="step"><strong>03</strong><h3>پروژه‌ات رو بساز</h3><p>طبق راهنمای سازنده، فایل رو وارد نرم‌افزار مناسب کن.</p></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="logo">RXG <span>R</span><b>IGS</b></div>
+    <div>ساخته‌شده برای جامعه انیمیشن ماینکرافت 💚💜</div>
+    <div>© <span id="year"></span> RXG Rigs</div>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">جزئیات ریگ</h3>
+      <button class="close" id="closeModal" aria-label="بستن">×</button>
+    </div>
+    <p id="modalDescription"></p>
+    <div class="meta" id="modalMeta"></div>
+    <p class="note" id="modalNotice"></p>
+    <button class="btn secondary" id="modalCloseBottom">بستن</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/*
+  برای اضافه کردن ریگ واقعی:
+  1. لینک فایل را در downloadUrl وارد کن.
+  2. عنوان، توضیحات، دسته و فرمت را تغییر بده.
+  3. فقط از فایل‌هایی استفاده کن که اجازه انتشارشان را داری.
+*/
+const rigs = [
+  {
+    id:1,
+    name:"Minecraft Character Rig",
+    category:"character",
+    categoryName:"کاراکتر",
+    format:"BLEND",
+    description:"نمونه نمایشی ریگ کاراکتر ماینکرافت برای تمرین انیمیشن و رندر سه‌بعدی.",
+    downloadUrl:""
+  },
+  {
+    id:2,
+    name:"Minecraft Action Rig",
+    category:"character",
+    categoryName:"کاراکتر",
+    format:"BLEND",
+    description:"نمونه نمایشی برای پروژه‌های اکشن و ساخت صحنه‌های ماینکرافتی.",
+    downloadUrl:""
+  },
+  {
+    id:3,
+    name:"Minecraft Weapon Model",
+    category:"weapon",
+    categoryName:"سلاح",
+    format:"BLEND",
+    description:"نمونه نمایشی دسته سلاح؛ فایل واقعی هنوز به کتابخانه اضافه نشده است.",
+    downloadUrl:""
+  }
+];
+
+const icons = {character:"🧍",weapon:"⚔️",other:"🧊"};
+const cards = document.getElementById("cards");
+const search = document.getElementById("search");
+const filter = document.getElementById("filter");
+const sort = document.getElementById("sort");
+const toast = document.getElementById("toast");
+let toastTimer;
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
+}
+
+function renderRigs() {
+  const query = search.value.trim().toLowerCase();
+  let list = rigs.filter(r =>
+    (filter.value === "all" || r.category === filter.value) &&
+    (r.name.toLowerCase().includes(query) ||
+     r.description.toLowerCase().includes(query))
+  );
+
+  if (sort.value === "az") {
+    list.sort((a,b) => a.name.localeCompare(b.name));
+  }
+
+  document.getElementById("rigCount").textContent =
+    new Intl.NumberFormat("fa-IR").format(rigs.length);
+
+  if (!list.length) {
+    cards.innerHTML = '<div class="empty">ریگی با این مشخصات پیدا نشد. عبارت دیگری جست‌وجو کن.</div>';
+    return;
+  }
+
+  cards.innerHTML = list.map(r => `
+    <article class="card">
+      <div class="preview">
+        <span class="category">${r.categoryName}</span>
+        <span class="emoji">${icons[r.category] || icons.other}</span>
+      </div>
+      <div class="card-body">
+        <h3>${escapeHTML(r.name)}</h3>
+        <p>${escapeHTML(r.description)}</p>
+        <div class="meta">
+          <span>${escapeHTML(r.format)}</span>
+          <span>ماینکرافت</span>
+        </div>
+        <div class="card-actions">
+          <button class="btn secondary" data-details="${r.id}">جزئیات</button>
+          <button class="btn primary" data-download="${r.id}">دانلود ↓</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[char]);
+}
+
+function openDetails(id) {
+  const r = rigs.find(item => item.id === id);
+  if (!r) return;
+  document.getElementById("modalTitle").textContent = r.name;
+  document.getElementById("modalDescription").textContent = r.description;
+  document.getElementById("modalMeta").textContent = r.categoryName + " · " + r.format;
+  document.getElementById("modalNotice").textContent = r.downloadUrl
+    ? "برای دریافت فایل از دکمه دانلود استفاده کن."
+    : "این ریگ فعلاً نمونه نمایشی است و فایل دانلودی به آن متصل نشده.";
+  document.getElementById("modal").classList.add("open");
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("open");
+}
+
+function downloadRig(id) {
+  const r = rigs.find(item => item.id === id);
+  if (!r) return;
+
+  if (!r.downloadUrl) {
+    showToast("هنوز لینک فایل واقعی برای این ریگ ثبت نشده است.");
+    return;
+  }
+
+  // فقط لینک‌های امن HTTP/HTTPS پذیرفته می‌شوند.
+  try {
+    const url = new URL(r.downloadUrl);
+    if (!["https:","http:"].includes(url.protocol)) throw new Error();
+    window.open(url.href, "_blank", "noopener,noreferrer");
+  } catch {
+    showToast("لینک دانلود معتبر نیست.");
+  }
+}
+
+cards.addEventListener("click", event => {
+  const detailsButton = event.target.closest("[data-details]");
+  const downloadButton = event.target.closest("[data-download]");
+  if (detailsButton) openDetails(Number(detailsButton.dataset.details));
+  if (downloadButton) downloadRig(Number(downloadButton.dataset.download));
+});
+
+search.addEventListener("input", renderRigs);
+filter.addEventListener("change", renderRigs);
+sort.addEventListener("change", renderRigs);
+
+document.getElementById("closeModal").addEventListener("click", closeModal);
+document.getElementById("modalCloseBottom").addEventListener("click", closeModal);
+document.getElementById("modal").addEventListener("click", event => {
+  if (event.target.id === "modal") closeModal();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeModal();
+});
+
+document.getElementById("submitForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const name = document.getElementById("rigName").value.trim();
+  const category = document.getElementById("rigCategory").value;
+  const link = document.getElementById("rigLink").value.trim();
+  const description = document.getElementById("rigDescription").value.trim();
+
+  try {
+    const url = new URL(link);
+    if (!["https:","http:"].includes(url.protocol)) throw new Error();
+  } catch {
+    showToast("لطفاً یک لینک معتبر با http یا https وارد کن.");
+    return;
+  }
+
+  const categoryName = {
+    character:"کاراکتر",weapon:"سلاح",other:"سایر"
+  }[category] || category;
+
+  const message =
+    "پیشنهاد ریگ برای RXG Rigs\n" +
+    "نام: " + name + "\n" +
+    "دسته: " + categoryName + "\n" +
+    "لینک: " + link + "\n" +
+    "توضیحات: " + (description || "ندارد");
+
+  // آماده‌سازی متن؛ این نسخه هنوز ارسال سمت سرور ندارد.
+  const blob = new Blob([message], {type:"text/plain;charset=utf-8"});
+  const tempUrl = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = tempUrl;
+  a.download = "rxg-rigs-submission.txt";
+  a.click();
+  URL.revokeObjectURL(tempUrl);
+  showToast("متن پیشنهاد آماده شد و به صورت فایل ذخیره می‌شود؛ هنوز برای سایت ارسال نشده است.");
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+renderRigs();
+</script>
 </body>
 </html>
